@@ -2,12 +2,18 @@ import ws, { WebSocketServer } from "ws";
 import WebSocket from "ws";
 import express from "express";
 import { Server } from "socket.io";
+import bodyParser from "body-parser";
+import authRouter from "./routes/auth";
 import cors from "cors";
-const port = 8000;
+import dotenv from "dotenv";
+dotenv.config();
 const app = express();
-app.use(cors);
-const server = app.listen(8000, () => {
-  console.log("Listening in port 8000");
+const port = process.env.SERVER_PORT;
+app.use(bodyParser.json());
+app.use(cors());
+app.use("/auth", authRouter);
+const server = app.listen(port, () => {
+  console.log(`Listening in port ${port}`);
 });
 const wss = new WebSocketServer({ server: server });
 const users = new Map();
