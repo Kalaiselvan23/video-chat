@@ -4,10 +4,9 @@ import App from './App.tsx'
 import './index.css'
 import { ThemeProvider } from './providers/ThemeProvider.tsx'
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <ThemeProvider defaultTheme='dark'>
-    <App />
 
-    </ThemeProvider>
-  </React.StrictMode>,
+  <ThemeProvider defaultTheme='dark'>
+    <App />
+  </ThemeProvider>
+
 )

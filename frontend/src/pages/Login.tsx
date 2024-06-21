@@ -48,7 +48,7 @@ export default function Login() {
                         className="w-full bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-400 dark:text-gray-900 dark:hover:bg-indigo-300"
                     >
                         Sign In
-                    </Button>   
+                    </Button>
                 </form>
                 <div className="text-center text-sm text-gray-500 dark:text-gray-400">
                     Don't have an account?{" "}
