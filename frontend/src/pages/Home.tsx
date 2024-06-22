@@ -1,4 +1,3 @@
-import { CreateRoomDialog } from "@/components/pages/home/CreateRoomDialog"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { VideoIcon } from "@/icons/icon"
 import { Link } from "react-router-dom"
@@ -175,13 +174,13 @@ export default function Home() {
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
         <p className="text-xs text-gray-500 dark:text-gray-400">&copy; 2024 Video Chat App. All rights reserved.</p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-          <a href="#" className="text-xs hover:underline underline-offset-4" prefetch={false}>
+          <a href="#" className="text-xs hover:underline underline-offset-4">
             About
           </a>
-          <a href="#" className="text-xs hover:underline underline-offset-4" prefetch={false}>
+          <a href="#" className="text-xs hover:underline underline-offset-4">
             Privacy
           </a>
-          <a href="#" className="text-xs hover:underline underline-offset-4" prefetch={false}>
+          <a href="#" className="text-xs hover:underline underline-offset-4">
             Terms
           </a>
         </nav>

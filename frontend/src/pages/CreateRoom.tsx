@@ -3,11 +3,11 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { SocketContextType, socketContext } from "@/providers/WebSocketProvider"
 
 export default function CreateRoom() {
-  const {createRoom,socket}=useContext<SocketContextType>(socketContext);
+  const {createRoom}=useContext<SocketContextType>(socketContext);
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-950 px-4 sm:px-6 md:px-8">
       <div className="max-w-md w-full space-y-6">

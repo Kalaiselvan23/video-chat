@@ -1,16 +1,14 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { SettingsIcon, UserIcon, MicIcon, VideoIcon, PhoneIcon, PlusIcon } from "@/icons/icon";
 import { SocketContextType, socketContext } from "@/providers/WebSocketProvider";
 
 export default function VideoChatComponent() {
-    const { socket, roomId, sendMessage, fetchUsers,roomUsers} = useContext<SocketContextType>(socketContext);
-    const [localStream, setLocalStream] = useState<MediaStream | null>(null);
+    const { socket, roomId, sendMessage, roomUsers } = useContext<SocketContextType>(socketContext);
     const [remoteStreams, setRemoteStreams] = useState<MediaStream[]>([]);
     const [pc, setPc] = useState<RTCPeerConnection | null>(null);
     const localVideoRef = useRef<HTMLVideoElement>(null);
-    
 
     useEffect(() => {
         const initializeWebRTC = async () => {
@@ -19,7 +17,6 @@ export default function VideoChatComponent() {
                 setPc(pc);
 
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-                setLocalStream(stream);
 
                 if (localVideoRef.current) {
                     localVideoRef.current.srcObject = stream;
@@ -52,7 +49,7 @@ export default function VideoChatComponent() {
                         console.error('Error creating offer:', e);
                     }
                 };
-            } catch (error) {
+            } catch (error: any) {
                 if (error.name === 'NotFoundError' || error.name === 'DevicesNotFoundError') {
                     console.error('No camera or microphone found.');
                 } else if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
@@ -73,8 +70,6 @@ export default function VideoChatComponent() {
             if (pc) {
                 pc.close();
             }
-            setLocalStream(null);
-            setRemoteStreams([]);
         };
     }, [roomId, socket, sendMessage]);
 
@@ -136,17 +131,24 @@ export default function VideoChatComponent() {
                                 <PlusIcon className="w-5 h-5" />
                             </Button>
                         </div>
-                            <ul>
-                                {roomUsers.map(user=>{
-                                    return <li>{user}</li>
-                                })}
-                            </ul>
+                        <ul>
+                            {roomUsers.map((user, index) => (
+                                <li key={index}>{user}</li>
+                            ))}
+                        </ul>
                     </div>
                     <div className="flex-1 overflow-auto">
                         <div className="grid gap-4 p-4">
                             {remoteStreams.map((stream, index) => (
                                 <div key={index} className="flex items-center gap-3">
-                                    <video className="w-10 h-10 rounded-full object-cover" autoPlay playsInline muted={false} srcObject={stream} />
+                                    <video
+                                        className="w-10 h-10 rounded-full object-cover"
+                                        autoPlay
+                                        playsInline
+                                        muted={false}
+                                        // @ts-ignore
+                                        srcObject={stream as MediaStream}
+                                    />
                                     <div>
                                         <div className="font-medium">Participant {index + 1}</div>
                                         <div className="text-sm text-gray-400">Participant</div>

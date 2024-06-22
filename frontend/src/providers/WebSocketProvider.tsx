@@ -1,4 +1,3 @@
-import Peer from 'peerjs';
 import React, { ReactNode, createContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,7 +11,16 @@ export interface SocketContextType {
     roomUsers: any[];
 }
 
-export const socketContext = createContext<SocketContextType | null>(null);
+export const socketContext = createContext<SocketContextType>({
+    socket: null,
+    roomId: null,
+    joinRoom: () => {},
+    createRoom: () => {},
+    sendMessage: () => {},
+    fetchUsers: () => {},
+    roomUsers: [],
+});
+
 
 export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const socketRef = useRef<WebSocket | null>(null);
@@ -23,7 +31,7 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({ children 
     const navigate = useNavigate();
 
     useEffect(() => {
-        socketRef.current = new WebSocket('ws://localhost:8000');
+        socketRef.current = new WebSocket('https://video-chat-backend-latest.onrender.com/');
 
         socketRef.current.onopen = (event: Event) => {
             if (roomId) { fetchUsers(roomId) }
